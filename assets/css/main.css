@@ -20,7 +20,6 @@ strong {
   display: flex;
   flex-direction: column;
   align-items: center;
-  display: none;
 }
 
 .identificacao img {
@@ -50,10 +49,6 @@ strong {
   border: none;
   width: 109px;
   height: 45px;
-}
-
-.escondido {
-  display: none;
 }
 
 .home > header {
@@ -113,7 +108,7 @@ strong {
   background-color: #dcdcdc;
 }
 
-.home > main > .chat > .privada {
+.home > main > .chat > .private_message {
   background: #ffdede;
 }
 
@@ -220,4 +215,14 @@ strong {
   background: rgba(0, 0, 0, 0.6);
   width: 100vw;
   height: 100vh;
+}
+
+.escondido {
+  display: none;
+}
+
+.ow {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
 }
