@@ -1,12 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chat</title>
-</head>
-<body>
-    
-</body>
+    <link rel="stylesheet" href="./assets/css/reset.css" />
+    <link rel="stylesheet" href="./assets/css/main.css" />
+  </head>
+  <body>
+    <aside class="identificacao">
+      <img src="./assets/images/logo.png" alt="logo" />
+      <input type="text" placeholder="Digite seu nome" />
+      <button>Entrar</button>
+    </aside>
+    <div class="home">
+      <header>
+        <img src="assets/images/logo.png" alt="logo" />
+        <ion-icon name="people-sharp"></ion-icon>
+      </header>
+      <main>
+        <section class="chat">
+          <div class="mensagem status">
+            <span class="datetime">(00:00:00)</span>
+            <strong>Fulano</strong> entra na sala...
+          </div>
+          <div class="mensagem">
+            <span class="datetime">(00:00:00)</span>
+            <strong>Fulano</strong> para <strong>Todos</strong>: Bom dia
+          </div>
+          <div class="mensagem privada">
+            <span class="datetime">(00:00:00)</span>
+            <strong>Fulano</strong> reservadamente para <strong>Fulano</strong>:
+            Oi gatinha quer tc?
+          </div>
+        </section>
+      </main>
+      <aside class="caixa-mensagem">
+        <div>
+          <textarea type="text" placeholder="Escreva aqui..."></textarea>
+          <ion-icon name="paper-plane-outline"></ion-icon>
+        </div>
+        <p class="escondido">Enviando para Fulano (reservadamente)</p>
+      </aside>
+    </div>
+    <aside class="sidemenu-background escondido">
+      <div class="sidemenu">
+        <h1>Escolha um contato para enviar mensagem:</h1>
+        <ul>
+          <li>
+            <div class="descricao">
+              <ion-icon name="people-sharp"></ion-icon>
+              <span>Todos</span>
+            </div>
+            <ion-icon name="checkmark-outline" class=""></ion-icon>
+          </li>
+          <li>
+            <div class="descricao">
+              <ion-icon name="person-circle"></ion-icon>
+              <span>João</span>
+            </div>
+            <ion-icon name="checkmark-outline" class="escondido"></ion-icon>
+          </li>
+          <li>
+            <div class="descricao">
+              <ion-icon name="person-circle"></ion-icon>
+              <span>Maria</span>
+            </div>
+            <ion-icon name="checkmark-outline" class="escondido"></ion-icon>
+          </li>
+        </ul>
+        <h1>Escolha a visibilidade:</h1>
+        <ul>
+          <li>
+            <div class="descricao">
+              <ion-icon name="lock-open"></ion-icon>
+              <span>Público</span>
+            </div>
+            <ion-icon name="checkmark-outline" class=""></ion-icon>
+          </li>
+          <li>
+            <div class="descricao">
+              <ion-icon name="lock-closed"></ion-icon>
+              <span>Reservadamente</span>
+            </div>
+            <ion-icon name="checkmark-outline" class="escondido"></ion-icon>
+          </li>
+        </ul>
+      </div>
+    </aside>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
 </html>

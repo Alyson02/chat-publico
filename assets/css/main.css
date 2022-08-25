@@ -1,0 +1,223 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #f3f3f3;
+}
+
+strong {
+  font-weight: 700;
+}
+
+.identificacao {
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  display: none;
+}
+
+.identificacao img {
+  margin-top: 72px;
+}
+
+.identificacao input {
+  margin-top: 94px;
+  border: 1px solid #d7d7d7;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 25px;
+  width: 261px;
+  height: 54px;
+}
+
+.identificacao button {
+  margin-top: 15px;
+  background: #e7e7e7;
+  border-radius: 9px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 25px;
+  color: #696969;
+  border: none;
+  width: 109px;
+  height: 45px;
+}
+
+.escondido {
+  display: none;
+}
+
+.home > header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 80px;
+  width: 100%;
+  background-color: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
+  padding: 0 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home > header img {
+  width: 75px;
+  height: 53px;
+}
+
+.home > header ion-icon {
+  width: 45px;
+  height: 45px;
+}
+
+.home > main {
+  padding: 80px 0;
+  height: 100vh;
+}
+
+.home > main > .chat {
+  height: 100%;
+  overflow: scroll;
+  padding: 26px 0;
+}
+
+.home > main > .chat > .mensagem {
+  padding: 12px 8px;
+  background-color: white;
+  margin-bottom: 4px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.home > main > .chat > .mensagem:last-child {
+  margin-bottom: 0px;
+}
+
+.home > main > .chat > .mensagem .datetime {
+  color: #aaaaaa;
+  margin-right: 4px;
+}
+
+.home > main > .chat > .status {
+  background-color: #dcdcdc;
+}
+
+.home > main > .chat > .privada {
+  background: #ffdede;
+}
+
+.home > .caixa-mensagem {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 80px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 18px;
+  background-color: white;
+}
+
+.home > .caixa-mensagem > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home > .caixa-mensagem > div > textarea {
+  border: none;
+  outline: none;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+  width: 100%;
+  resize: none;
+}
+
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #000000;
+  opacity: 1; /* Firefox */
+  font-style: italic;
+  font-weight: 400;
+}
+
+.home > .caixa-mensagem > div > ion-icon {
+  width: 26px;
+  height: 26px;
+}
+
+.sidemenu {
+  background-color: white;
+  position: absolute;
+  right: 0;
+  width: 70%;
+  height: 100vh;
+  padding: 24px 18px;
+}
+
+.sidemenu h1 {
+  text-align: center;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  width: 169px;
+  margin: 0 auto;
+}
+
+.sidemenu ul{
+  margin: 24px 0;
+}
+
+.sidemenu ul li{
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidemenu ul li > ion-icon{
+  color: #28BB25;
+}
+
+.sidemenu ul li:last-child{
+  margin-bottom: 0px;
+}
+
+.sidemenu .descricao{
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.sidemenu .descricao ion-icon {
+  width: 25px;
+  height: 25px;
+}
+
+.sidemenu .descricao span {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.sidemenu-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+  width: 100vw;
+  height: 100vh;
+}
