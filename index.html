@@ -42,42 +42,35 @@
     <aside class="sidemenu-background escondido"></aside>
     <div class="sidemenu escondido">
       <h1>Escolha um contato para enviar mensagem:</h1>
-      <ul>
-        <li>
+      <ul id="participantes">
+        <li class="escolhido">
           <div class="descricao">
             <ion-icon name="people-sharp"></ion-icon>
             <span>Todos</span>
           </div>
           <ion-icon name="checkmark-outline" class=""></ion-icon>
         </li>
-        <li>
+        <!-- <li>
           <div class="descricao">
             <ion-icon name="person-circle"></ion-icon>
             <span>João</span>
           </div>
           <ion-icon name="checkmark-outline" class="escondido"></ion-icon>
-        </li>
-        <li>
-          <div class="descricao">
-            <ion-icon name="person-circle"></ion-icon>
-            <span>Maria</span>
-          </div>
-          <ion-icon name="checkmark-outline" class="escondido"></ion-icon>
-        </li>
+        </li> -->
       </ul>
       <h1>Escolha a visibilidade:</h1>
       <ul>
         <li>
-          <div class="descricao">
+          <div class="descricao escolhido">
             <ion-icon name="lock-open"></ion-icon>
-            <span>Público</span>
+            <span onclick="alterarTipo(this)">Público</span>
           </div>
           <ion-icon name="checkmark-outline" class=""></ion-icon>
         </li>
         <li>
           <div class="descricao">
             <ion-icon name="lock-closed"></ion-icon>
-            <span>Reservadamente</span>
+            <span onclick="alterarTipo(this)">Reservadamente</span>
           </div>
           <ion-icon name="checkmark-outline" class="escondido"></ion-icon>
         </li>

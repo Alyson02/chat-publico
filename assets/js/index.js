@@ -1,4 +1,8 @@
 let nomeUsuario = "";
+let tempoUltimaMensagem = 0;
+let para = "Todos";
+let tipo = "message";
+let participantes = [];
 
 entrar();
 
@@ -23,12 +27,16 @@ async function entrar() {
         document.querySelector(".identificacao").classList.add("escondido");
         document.querySelector(".home").classList.remove("escondido");
         carregaMensagens();
+        carregaParticipantes();
         setInterval(async () => {
           await axios.post("https://mock-api.driven.com.br/api/v6/uol/status", {
             name: campoNome.value,
           });
           carregaMensagens();
         }, 5000);
+        setInterval(() => {
+          carregaParticipantes();
+        }, 10000);
       })
       .catch((r) => {
         console.log(r);
@@ -42,19 +50,34 @@ async function carregaMensagens() {
   await axios
     .get("https://mock-api.driven.com.br/api/v6/uol/messages")
     .then((res) => {
-      console.log(res.data);
+      console.log(res.data, 'mensagens')
       mensagens = res.data;
     });
   mensagens.forEach((mensagem) => criaMensagem(mensagem));
 }
 
-function criaMensagem(mensagem) {
-  console.log(nomeUsuario);
-  if (mensagem.type == "private_message" && (mensagem.to != nomeUsuario || !mensagem.from == nomeUsuario)) return;
+async function carregaParticipantes() {
+  await axios
+    .get("https://mock-api.driven.com.br/api/v6/uol/participants")
+    .then((res) => {
+      participantes = res.data;
+    });
+  participantes.forEach((participante) => criaParticipante(participante));
+  ativarOuvinte();
+}
 
+function criaMensagem(mensagem) {
+  if (
+    mensagem.type == "private_message"
+  ){
+    if(!(mensagem.to == nomeUsuario)){
+      if(!(mensagem.from == nomeUsuario)) return
+    }
+  }
+    
   const chat = document.querySelector(".chat");
 
-  if (chat.childNodes.length > 99) {
+  if (chat.childElementCount > 99) {
     chat.innerHTML = "";
   }
 
@@ -87,7 +110,45 @@ function criaMensagem(mensagem) {
   elementMensagem.appendChild(elementDatetime);
   elementMensagem.appendChild(elementText);
   chat.appendChild(elementMensagem);
-  elementMensagem.scrollIntoView();
+
+  const tempoAtual = Number(mensagem.time.substring(3, 8).replace(":", ""));
+  if (
+    (mensagem.type == "message" || mensagem.type == "private_message") &&
+    tempoAtual > tempoUltimaMensagem
+  ) {
+    elementMensagem.scrollIntoView();
+    tempoUltimaMensagem = tempoAtual;
+  }
+}
+
+function criaParticipante(participante) {
+  const listaParticipantes = document.querySelector("#participantes");
+
+  if (listaParticipantes.children.length > 13) {
+    listaParticipantes.innerHTML = `<li class="escolhido">
+    <div class="descricao">
+      <ion-icon name="people-sharp"></ion-icon>
+      <span>Todos</span>
+    </div>
+    <ion-icon name="checkmark-outline" class=""></ion-icon>
+  </li>`;
+  }
+
+  const itemLinha = document.createElement("li");
+
+  const div = document.createElement("div");
+  div.classList.add("descricao");
+  div.innerHTML = `<ion-icon name="person-circle"></ion-icon>
+                   <span>${participante.name}</span>`;
+
+  //<ion-icon name="checkmark-outline" class="escondido"></ion-icon>
+  const ionIconMark = document.createElement("ion-icon");
+  ionIconMark.setAttribute("name", "checkmark-outline");
+  ionIconMark.classList.add("escondido");
+
+  itemLinha.appendChild(div);
+  itemLinha.appendChild(ionIconMark);
+  listaParticipantes.appendChild(itemLinha);
 }
 
 const btnEnviar = document.querySelector("#btn-enviar");
@@ -110,9 +171,9 @@ async function enviarMensagem(text) {
   await axios
     .post("https://mock-api.driven.com.br/api/v6/uol/messages", {
       from: nomeUsuario,
-      to: "Todos",
+      to: para,
       text: text,
-      type: "message", // ou "private_message" para o bônus
+      type: tipo, // ou "private_message" para o bônus
     })
     .then((r) => {
       carregaMensagens();
@@ -131,6 +192,34 @@ bgSideMenu.addEventListener("click", (e) => {
   bgSideMenu.classList.toggle("escondido");
   document.querySelector(".sidemenu").classList.toggle("escondido");
 });
+
+function ativarOuvinte() {
+  const ulParticipantes = document.querySelector("#participantes");
+  const liParticipantes = ulParticipantes.childNodes;
+
+  liParticipantes.forEach((liParticipante) => {
+    liParticipante.addEventListener("click", (e) => {
+      para = liParticipante.querySelector(".descricao span").innerHTML;
+      const to = document.querySelector(".to");
+      to.classList.remove("escondido");
+      to.innerHTML = `Enviando para ${para}`;
+    });
+  });
+}
+
+function alterarTipo(el) {
+
+
+
+  el.classList.remove("escondido");
+
+  if (el.innerHTML == "Reservadamente") {
+    tipo = "private_message";
+    const to = document.querySelector(".to");
+    to.classList.remove("escondido");
+    to.innerHTML = `Reservadamente para ${para}`;
+  }
+}
 
 function notificar(text, color) {
   Toastify({
