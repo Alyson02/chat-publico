@@ -82,7 +82,7 @@ strong {
 
 .home > main > .chat {
   height: 100%;
-  overflow: scroll;
+  overflow-y: scroll;
   padding: 26px 0;
 }
 
@@ -152,15 +152,30 @@ strong {
 .home > .caixa-mensagem > div > ion-icon {
   width: 26px;
   height: 26px;
+  margin-left: 20px;
 }
 
 .sidemenu {
   background-color: white;
   position: absolute;
   right: 0;
+  top: 0;
   width: 70%;
   height: 100vh;
   padding: 24px 18px;
+  animation: showSidebar 0.4s;
+  z-index: 1000;
+}
+
+@keyframes showSidemenu {
+  from {
+    opacity: 0;
+    width: 0;
+  }
+  to {
+    opacity: 1;
+    width: 70%;
+  }
 }
 
 .sidemenu h1 {
@@ -215,6 +230,7 @@ strong {
   background: rgba(0, 0, 0, 0.6);
   width: 100vw;
   height: 100vh;
+  z-index: 2;
 }
 
 .escondido {

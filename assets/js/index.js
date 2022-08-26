@@ -6,13 +6,12 @@ async function entrar() {
   const btnEntrar = document.querySelector("#entrar");
   const campoNome = document.querySelector("#campoNome");
 
-  nomeUsuario = campoNome.value;
-
   campoNome.addEventListener("keypress", (e) => {
     if (e.key === "Enter") btnEntrar.click();
   });
 
   btnEntrar.addEventListener("click", async (e) => {
+    nomeUsuario = campoNome.value;
     e.prevent;
 
     await axios
@@ -50,8 +49,8 @@ async function carregaMensagens() {
 }
 
 function criaMensagem(mensagem) {
-  if (mensagem.status == "private_message" && mensagem.to != nomeUsuario)
-    return;
+  console.log(nomeUsuario);
+  if (mensagem.type == "private_message" && (mensagem.to != nomeUsuario || !mensagem.from == nomeUsuario)) return;
 
   const chat = document.querySelector(".chat");
 
@@ -75,12 +74,12 @@ function criaMensagem(mensagem) {
       break;
 
     case "private_message":
-      elementText.innerHTML = `$<strong>${mensagem.from}</strong> 
+      elementText.innerHTML = `<strong>${mensagem.from}</strong> 
             reservadamente para <strong>${mensagem.to}</strong>:  ${mensagem.text}`;
       break;
 
     default:
-      elementText.innerHTML = `$<strong>${mensagem.from}</strong> 
+      elementText.innerHTML = `<strong>${mensagem.from}</strong> 
             para <strong>${mensagem.to}</strong>:  ${mensagem.text}`;
       break;
   }
@@ -90,6 +89,48 @@ function criaMensagem(mensagem) {
   chat.appendChild(elementMensagem);
   elementMensagem.scrollIntoView();
 }
+
+const btnEnviar = document.querySelector("#btn-enviar");
+const mensagem = document.querySelector("#mensagem");
+
+mensagem.addEventListener("keypress", (e) => {
+  if (e.keyCode == 13 && !e.shiftKey) {
+    btnEnviar.click();
+    console.log("enviou");
+  }
+});
+
+btnEnviar.addEventListener("click", (e) => {
+  e.preventDefault();
+  enviarMensagem(mensagem.value);
+  mensagem.value = "";
+});
+
+async function enviarMensagem(text) {
+  await axios
+    .post("https://mock-api.driven.com.br/api/v6/uol/messages", {
+      from: nomeUsuario,
+      to: "Todos",
+      text: text,
+      type: "message", // ou "private_message" para o bônus
+    })
+    .then((r) => {
+      carregaMensagens();
+    });
+}
+
+const botaoMenu = document.querySelector("#botao-menu");
+const bgSideMenu = document.querySelector(".sidemenu-background");
+
+botaoMenu.addEventListener("click", (e) => {
+  bgSideMenu.classList.toggle("escondido");
+  document.querySelector(".sidemenu").classList.toggle("escondido");
+});
+
+bgSideMenu.addEventListener("click", (e) => {
+  bgSideMenu.classList.toggle("escondido");
+  document.querySelector(".sidemenu").classList.toggle("escondido");
+});
 
 function notificar(text, color) {
   Toastify({
