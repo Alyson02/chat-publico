@@ -111,13 +111,10 @@ function criaMensagem(mensagem) {
   elementMensagem.appendChild(elementText);
   chat.appendChild(elementMensagem);
 
-  const tempoAtual = Number(mensagem.time.substring(3, 8).replace(":", ""));
   if (
-    (mensagem.type == "message" || mensagem.type == "private_message") &&
-    tempoAtual > tempoUltimaMensagem
+    (mensagem.type == "message" || mensagem.type == "private_message")
   ) {
     elementMensagem.scrollIntoView();
-    tempoUltimaMensagem = tempoAtual;
   }
 }
 
