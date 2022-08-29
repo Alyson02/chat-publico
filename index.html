@@ -43,12 +43,12 @@
     <div class="sidemenu escondido">
       <h1>Escolha um contato para enviar mensagem:</h1>
       <ul id="participantes">
-        <li class="escolhido">
+        <li class="selecionado" onclick="ativarOuvinte(this)">
           <div class="descricao">
             <ion-icon name="people-sharp"></ion-icon>
             <span>Todos</span>
           </div>
-          <ion-icon name="checkmark-outline" class=""></ion-icon>
+          <ion-icon name="checkmark-outline" id="mark"></ion-icon>
         </li>
         <!-- <li>
           <div class="descricao">
@@ -59,20 +59,20 @@
         </li> -->
       </ul>
       <h1>Escolha a visibilidade:</h1>
-      <ul>
-        <li>
-          <div class="descricao escolhido">
+      <ul id="visibilidades">
+        <li class="selecionado">
+          <div class="descricao selecionado">
             <ion-icon name="lock-open"></ion-icon>
             <span onclick="alterarTipo(this)">Público</span>
           </div>
-          <ion-icon name="checkmark-outline" class=""></ion-icon>
+          <ion-icon name="checkmark-outline" class="" id="mark"></ion-icon>
         </li>
         <li>
           <div class="descricao">
             <ion-icon name="lock-closed"></ion-icon>
             <span onclick="alterarTipo(this)">Reservadamente</span>
           </div>
-          <ion-icon name="checkmark-outline" class="escondido"></ion-icon>
+          <ion-icon name="checkmark-outline" class="escondido" id="mark"></ion-icon>
         </li>
       </ul>
     </div>

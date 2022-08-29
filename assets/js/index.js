@@ -50,7 +50,7 @@ async function carregaMensagens() {
   await axios
     .get("https://mock-api.driven.com.br/api/v6/uol/messages")
     .then((res) => {
-      console.log(res.data, 'mensagens')
+      console.log(res.data, "mensagens");
       mensagens = res.data;
     });
   mensagens.forEach((mensagem) => criaMensagem(mensagem));
@@ -62,19 +62,19 @@ async function carregaParticipantes() {
     .then((res) => {
       participantes = res.data;
     });
-  participantes.forEach((participante) => criaParticipante(participante));
-  ativarOuvinte();
+  participantes.forEach((participante) => {
+    if (participante.name == nomeUsuario) return;
+    criaParticipante(participante);
+  });
 }
 
 function criaMensagem(mensagem) {
-  if (
-    mensagem.type == "private_message"
-  ){
-    if(!(mensagem.to == nomeUsuario)){
-      if(!(mensagem.from == nomeUsuario)) return
+  if (mensagem.type == "private_message") {
+    if (!(mensagem.to == nomeUsuario)) {
+      if (!(mensagem.from == nomeUsuario)) return;
     }
   }
-    
+
   const chat = document.querySelector(".chat");
 
   if (chat.childElementCount > 99) {
@@ -125,13 +125,14 @@ function criaParticipante(participante) {
   const listaParticipantes = document.querySelector("#participantes");
 
   if (listaParticipantes.children.length > 13) {
-    listaParticipantes.innerHTML = `<li class="escolhido">
+    listaParticipantes.innerHTML = `<li class="selecionado">
     <div class="descricao">
       <ion-icon name="people-sharp"></ion-icon>
       <span>Todos</span>
     </div>
-    <ion-icon name="checkmark-outline" class=""></ion-icon>
+    <ion-icon name="checkmark-outline" id="mark"></ion-icon>
   </li>`;
+    ativarOuvinte(listaParticipantes.firstChild);
   }
 
   const itemLinha = document.createElement("li");
@@ -144,11 +145,13 @@ function criaParticipante(participante) {
   //<ion-icon name="checkmark-outline" class="escondido"></ion-icon>
   const ionIconMark = document.createElement("ion-icon");
   ionIconMark.setAttribute("name", "checkmark-outline");
+  ionIconMark.setAttribute("id", "mark");
   ionIconMark.classList.add("escondido");
 
   itemLinha.appendChild(div);
   itemLinha.appendChild(ionIconMark);
   listaParticipantes.appendChild(itemLinha);
+  ativarOuvinte(itemLinha);
 }
 
 const btnEnviar = document.querySelector("#btn-enviar");
@@ -193,25 +196,46 @@ bgSideMenu.addEventListener("click", (e) => {
   document.querySelector(".sidemenu").classList.toggle("escondido");
 });
 
-function ativarOuvinte() {
-  const ulParticipantes = document.querySelector("#participantes");
-  const liParticipantes = ulParticipantes.childNodes;
+function ativarOuvinte(liParticipante) {
+  liParticipante.addEventListener("click", (e) => {
+    let jaSelecionado = encontrarElemento(
+      document.querySelector("#participantes"),
+      "selecionado"
+    );
 
-  liParticipantes.forEach((liParticipante) => {
-    liParticipante.addEventListener("click", (e) => {
-      para = liParticipante.querySelector(".descricao span").innerHTML;
-      const to = document.querySelector(".to");
-      to.classList.remove("escondido");
-      to.innerHTML = `Enviando para ${para}`;
-    });
+    if (jaSelecionado != null) {
+      console.log(jaSelecionado, "ja selecionado");
+      const mark = jaSelecionado.querySelector("#mark");
+      console.log(mark);
+      mark.classList.add("escondido");
+      jaSelecionado.classList.remove("selecionado")
+    }
+
+    liParticipante.classList.add("selecionado");
+
+    para = liParticipante.querySelector(".descricao span").innerHTML;
+
+    const to = document.querySelector(".to");
+    to.classList.remove("escondido");
+    to.innerHTML = `Enviando para ${para}`;
+
+    const mark = liParticipante.querySelector("#mark");
+    mark.classList.remove("escondido");
   });
 }
 
 function alterarTipo(el) {
+  const jaSelecionado = encontrarElemento(
+    document.querySelector("#visibilidades"), "selecionado"
+  );
 
-
-
-  el.classList.remove("escondido");
+  if (jaSelecionado) {
+    console.log(jaSelecionado, "ja selecionado");
+    const mark = jaSelecionado.querySelector("#mark");
+    console.log(mark);
+    mark.classList.add("escondido");
+    jaSelecionado.classList.remove("selecionado")
+  }
 
   if (el.innerHTML == "Reservadamente") {
     tipo = "private_message";
@@ -219,6 +243,12 @@ function alterarTipo(el) {
     to.classList.remove("escondido");
     to.innerHTML = `Reservadamente para ${para}`;
   }
+
+  const elPai = el.parentNode;
+  const markPai = elPai.parentNode;
+  markPai.classList.add("selecionado")
+  const mark = markPai.querySelector("#mark");
+  mark.classList.remove("escondido");
 }
 
 function notificar(text, color) {
@@ -233,4 +263,13 @@ function notificar(text, color) {
       background: color,
     },
   }).showToast();
+}
+
+function encontrarElemento(pai, classe) {
+  const filhos = Array.from(pai.children);
+  let selecionado;
+  filhos.forEach((filho) => {
+    if (filho.classList.contains(classe)) selecionado = filho;
+  });
+  return selecionado;
 }
