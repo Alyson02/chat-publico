@@ -16,7 +16,7 @@ async function entrar() {
 
   btnEntrar.addEventListener("click", async (e) => {
     nomeUsuario = campoNome.value;
-    e.prevent;
+    e.preventDefault();
 
     await axios
       .post("https://mock-api.driven.com.br/api/v6/uol/participants", {
@@ -39,6 +39,7 @@ async function entrar() {
         }, 10000);
       })
       .catch((r) => {
+        
         console.log(r);
         notificar("Nome não disponível.", "red");
       });
