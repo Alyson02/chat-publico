@@ -178,6 +178,8 @@ async function enviarMensagem(text) {
     })
     .then((r) => {
       carregaMensagens();
+    }).catch(r => {
+      location.reload()
     });
 }
 
